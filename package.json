@@ -20,7 +20,8 @@
   "workspaces": [
     "packages/common",
     "packages/core",
-    "packages/paths"
+    "packages/paths",
+    "packages/testing"
   ],
   "scripts": {
     "postinstall": "npm run build -ws",
@@ -34,6 +35,10 @@
     "sls:package": "sls package"
   },
   "dependencies": {
+    "@heaveless/common": "1.0.0",
+    "@heaveless/core": "1.0.0",
+    "@heaveless/paths": "1.0.0",
+    "@heaveless/testing": "1.0.0",
     "@codegenie/serverless-express": "^4.16.0",
     "@koa/bodyparser": "^5.1.1",
     "@koa/cors": "^5.0.0",

@@ -41,9 +41,7 @@ export default [
       sourceType: 'module',
 
       parserOptions: {
-        project: 'tsconfig.json',
-        tsconfigRootDir:
-          'C:\\Users\\dev\\Projects\\culqi\\or-channel-mobileapp-feature\\app',
+        project: 'tsconfig.json'
       },
     },
 

@@ -32,6 +32,9 @@
     },
     {
       "path": "./packages/paths"
+    },
+    {
+      "path": "./packages/testing"
     }
   ]
 }

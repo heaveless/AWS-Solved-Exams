@@ -1,0 +1,37 @@
+{
+  "extends": "./tsconfig.build.json",
+  "ts-node": {
+    "require": [
+      "tsconfig-paths/register"
+    ]
+  },
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@modules/*": [
+        "./src/modules/*"
+      ],
+      "@shared/*": [
+        "./src/shared/*"
+      ]
+    }
+  },
+  "exclude": [
+    "esbuild.config.ts",
+    "jest.config.ts",
+    "test"
+  ],
+  "references": [
+    {
+      "path": "./packages/common"
+    },
+    {
+      "path": "./packages/core"
+    },
+    {
+      "path": "./packages/paths"
+    }
+  ]
+}

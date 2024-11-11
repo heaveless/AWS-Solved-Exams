@@ -1,0 +1,1 @@
+export { getIdFromUrl } from './url';

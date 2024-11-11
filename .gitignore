@@ -1,0 +1,12 @@
+node_modules/
+lib/
+dist/
+
+.dynamodb/
+.build/
+
+esbuild.config.js
+esbuild.config.d.ts
+tsconfig.tsbuildinfo
+
+.env

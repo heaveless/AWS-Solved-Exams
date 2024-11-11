@@ -1,0 +1,88 @@
+service: star-wars
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-dotenv-plugin
+  #- serverless-esbuild
+  - serverless-tscpaths
+  - serverless-dynamodb
+  #- serverless-plugin-optimize
+  - serverless-offline
+
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  environment:
+    CONF_REGION: ${env:CONF_REGION}
+    CONF_AWS_ACCESS_KEY_ID: ${env:CONF_AWS_ACCESS_KEY_ID}
+    CONF_AWS_SECRET_ACCESS_KEY: ${env:CONF_AWS_SECRET_ACCESS_KEY}
+    CONF_DYNAMODB_ENDPOINT: ${env:CONF_DYNAMODB_ENDPOINT}
+    CONF_DYNAMODB_TABLE: ${env:CONF_DYNAMODB_TABLE}
+    CONF_REDIS_HOST: ${env:CONF_REDIS_HOST}
+    CONF_REDIS_PORT: ${env:CONF_REDIS_PORT}
+    CONF_REDIS_PASSWORD: ${env:CONF_REDIS_PASSWORD}
+    CONF_SWAPI_API_URL: ${env:CONF_SWAPI_API_URL}
+
+# iamRoleStatements:
+#   - Effect: Allow
+#     Action:
+#       - dynamodb:*
+#     Resource:
+#       - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.CONF_DYNAMODB_TABLE}
+
+functions:
+  main:
+    handler: src/main.handler
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: '{proxy+}'
+
+custom:
+  #esbuild:
+  #  config: './esbuild.config.ts'
+
+  # dotenv:
+  #   path: .env.development
+
+  tscpaths:
+    buildPath: .build
+    tsconfigPath: tsconfig.json
+
+  serverless-dynamodb:
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+    stages:
+      - dev
+
+  serverless-offline:
+    logLevel: debug
+    port: 3000
+    host: localhost
+    stage: dev
+    lambdaPort: 3002
+    noPrependStageInUrl: true
+
+resources:
+  Resources:
+    Planet:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.CONF_DYNAMODB_TABLE}
+        AttributeDefinitions:
+          - AttributeName: ref
+            AttributeType: S
+        KeySchema:
+          - AttributeName: ref
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    

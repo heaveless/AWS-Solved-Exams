@@ -20,11 +20,11 @@ export class SwapiService {
 
   async getFilmsById(id: string): Promise<Array<SwapiFilm>> {
     const planet = await this.swapiProvider.getPlanetById(id);
-    const residentsRequests = planet.films.map((url) =>
+    const filmsRequests = planet.films.map((url) =>
       this.swapiProvider.getFilmById(getIdFromUrl(url)),
     );
 
-    const records = await Promise.all(residentsRequests);
+    const records = await Promise.all(filmsRequests);
 
     return records as Array<SwapiFilm>;
   }

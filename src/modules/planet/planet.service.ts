@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { PlanetProvider } from './planet.provider';
 import { Planet, PlanetDto, PlanetExt } from './planet.model';
 import { SwapiService } from '@modules/swapi/swapi.service';
-import { Cacheable } from '@type-cacheable/core';
 
 @Injectable()
 export class PlanetService {
@@ -19,7 +18,6 @@ export class PlanetService {
     return this.planetProvider.create(record);
   }
 
-  @Cacheable({ ttlSeconds: 60, cacheKey: 'planet' })
   async getOne(ref: string): Promise<PlanetExt> {
     const record = await this.planetProvider.getOne(ref);
     const residents = await this.swapiService.getResidentsById(record.id);

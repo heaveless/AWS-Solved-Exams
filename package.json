@@ -28,6 +28,8 @@
     "prebuild": "rimraf dist tsconfig.tsbuildinfo",
     "build": "tsc && tscpaths -p tsconfig.json -s ./src -o ./dist",
     "build:esbuild": "ts-node esbuild.config.ts",
+    "test": "jest",
+    "test:e2e": "",
     "sls:db:install": "sls dynamodb install",
     "sls:db:start": "sls dynamodb start",
     "sls:deploy": "sls deploy",

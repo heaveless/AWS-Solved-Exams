@@ -1,15 +1,11 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: PetStore on Heroku
+  title: Planets API
   description: |
-    **This example has a working backend hosted in Heroku**
-
-    You can try all HTTP operation described in this Swagger spec.
-
-    Find source code of this API [here](https://github.com/mohsen1/petstore-api)
-host: petstore-api.herokuapp.com
-basePath: /pet
+    ** Una API donde los planetas de Star Wars cobran vida en un abrir y cerrar de parsecs
+host: localhost:3000
+basePath: /api
 schemes:
   - http
   - https
@@ -20,64 +16,335 @@ produces:
   - application/json
   - text/html
 paths:
-  /:
+  /healthcheck:
     get:
-      parameters:
-        - name: limit
-          in: query
-          description: number of pets to return
-          type: integer
-          default: 11
-          minimum: 11
-          maximum: 10000
+      summary: Obtener salud informacion de salud de la aplicacion
+      description: Endpoint para obtener salud de la aplicacion.
       responses:
         200:
-          description:  List all pets
+          description: Respuesta exitosa con la saluda de la aplicacion
           schema:
-            title: Pets
-            type: array
-            items:
-              $ref: '#/definitions/Pet'
-    post:
-      parameters:
-        - name: pet
-          in: body
-          description: The pet JSON you want to post
-          schema:
-            $ref: '#/definitions/Pet'
-          required: true
-      responses:
-        200:
-          description: Make a new pet
-    put:
-      parameters:
-        - name: pet
-          in: body
-          description: The pet JSON you want to post
-          schema:
-            $ref: '#/definitions/Pet'
-          required: true
-      responses:
-        200:
-          description: Updates the pet
-  /{petId}:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  dynamodb:
+                    type: object
+                    properties:
+                      info:
+                        type: string
+                        example: "up"
+                  redis:
+                    type: object
+                    properties:
+                      info:
+                        type: string
+                        example: "up"
+                  swapi:
+                    type: object
+                    properties:
+                      info:
+                        type: string
+                        example: "up"
+              status:
+                type: integer
+                example: 200
+  /planets:
     get:
-      parameters:
-        - name: petId
-          in: path
-          type: string
-          description: ID of the pet
-          required: true
+      summary: Obtener información de los planetas
+      description: Endpoint para obtener detalles de varios planetas.
       responses:
-        200:
-          description: Sends the pet with pet Id
+        '200':
+          description: Respuesta exitosa con la lista de planetas
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    clima:
+                      type: string
+                      example: "árido"
+                    periodo_rotacion:
+                      type: string
+                      example: "23"
+                    poblacion:
+                      type: string
+                      example: "200000"
+                    creado_en:
+                      type: string
+                      format: date-time
+                      example: "2024-11-11T02:47:33.383Z"
+                    periodo_orbital:
+                      type: string
+                      example: "304"
+                    ref:
+                      type: string
+                      example: "38198ccb66134eaa8325fd1e3863d2d8"
+                    agua_superficial:
+                      type: string
+                      example: "1"
+                    diametro:
+                      type: string
+                      example: "10465"
+                    gravedad:
+                      type: string
+                      example: "1 estándar"
+                    nombre:
+                      type: string
+                      example: "Tatooine"
+                    id:
+                      type: string
+                      example: "1"
+                    terreno:
+                      type: string
+                      example: "desierto"
+                    actualizado_en:
+                      type: string
+                      format: date-time
+                      example: "2024-11-11T02:47:33.383Z"
+              status:
+                type: integer
+                example: 200
 
-definitions:
-  Pet:
-    type: object
-    properties:
-      name:
-        type: string
-      birthday:
-        type: integer
-        format: int32
+    post:
+      summary: Crear un nuevo planeta
+      description: Endpoint para agregar un nuevo planeta a la base de datos.
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Datos del nuevo planeta
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                example: "1"
+              nombre:
+                type: string
+                example: "Tatooine"
+              periodo_rotacion:
+                type: string
+                example: "23"
+              periodo_orbital:
+                type: string
+                example: "304"
+              diametro:
+                type: string
+                example: "10465"
+              clima:
+                type: string
+                example: "árido"
+              gravedad:
+                type: string
+                example: "1 estándar"
+              terreno:
+                type: string
+                example: "desierto"
+              agua_superficial:
+                type: string
+                example: "1"
+              poblacion:
+                type: string
+                example: "200000"
+      responses:
+        '200':
+          description: Planeta creado exitosamente
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+  /planets/{ref}:
+    get:
+      summary: Obtener detalles de un planeta
+      description: Endpoint para obtener detalles completos de un planeta por su referencia única.
+      parameters:
+        - in: path
+          name: ref
+          required: true
+          type: string
+          description: La referencia única del planeta
+      responses:
+        '200':
+          description: Respuesta exitosa con los detalles del planeta
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  clima:
+                    type: string
+                    example: "árido"
+                  periodo_rotacion:
+                    type: string
+                    example: "23"
+                  poblacion:
+                    type: string
+                    example: "200000"
+                  creado_en:
+                    type: string
+                    format: date-time
+                    example: "2024-11-11T02:47:33.383Z"
+                  periodo_orbital:
+                    type: string
+                    example: "304"
+                  ref:
+                    type: string
+                    example: "38198ccb66134eaa8325fd1e3863d2d8"
+                  agua_superficial:
+                    type: string
+                    example: "1"
+                  diametro:
+                    type: string
+                    example: "10465"
+                  gravedad:
+                    type: string
+                    example: "1 estándar"
+                  nombre:
+                    type: string
+                    example: "Tatooine"
+                  id:
+                    type: string
+                    example: "1"
+                  terreno:
+                    type: string
+                    example: "desierto"
+                  actualizado_en:
+                    type: string
+                    format: date-time
+                    example: "2024-11-11T02:47:33.383Z"
+                  residentes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        nombre:
+                          type: string
+                          example: "Luke Skywalker"
+                        altura:
+                          type: string
+                          example: "172"
+                        masa:
+                          type: string
+                          example: "77"
+                        color_pelo:
+                          type: string
+                          example: "blond"
+                        color_piel:
+                          type: string
+                          example: "fair"
+                        color_ojos:
+                          type: string
+                          example: "blue"
+                        fecha_nacimiento:
+                          type: string
+                          example: "19BBY"
+                        genero:
+                          type: string
+                          example: "male"
+                        mundo_natal:
+                          type: string
+                          example: "https://swapi.py4e.com/api/planets/1/"
+                        peliculas:
+                          type: array
+                          items:
+                            type: string
+                            example: "https://swapi.py4e.com/api/films/1/"
+                        especies:
+                          type: array
+                          items:
+                            type: string
+                            example: "https://swapi.py4e.com/api/species/1/"
+                        vehiculos:
+                          type: array
+                          items:
+                            type: string
+                            example: "https://swapi.py4e.com/api/vehicles/14/"
+                        naves:
+                          type: array
+                          items:
+                            type: string
+                            example: "https://swapi.py4e.com/api/starships/12/"
+                        creado:
+                          type: string
+                          format: date-time
+                          example: "2014-12-09T13:50:51.644000Z"
+                        editado:
+                          type: string
+                          format: date-time
+                          example: "2014-12-20T21:17:56.891000Z"
+                        url:
+                          type: string
+                          example: "https://swapi.py4e.com/api/people/1/"
+                  peliculas:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        titulo:
+                          type: string
+                          example: "A New Hope"
+                        episodio_id:
+                          type: integer
+                          example: 4
+                        escena_apertura:
+                          type: string
+                          example: "It is a period of civil war..."
+                        director:
+                          type: string
+                          example: "George Lucas"
+                        productor:
+                          type: string
+                          example: "Gary Kurtz, Rick McCallum"
+                        fecha_lanzamiento:
+                          type: string
+                          format: date
+                          example: "1977-05-25"
+                        personajes:
+                          type: array
+                          items:
+                            type: string
+                            example: "https://swapi.py4e.com/api/people/1/"
+                        planetas:
+                          type: array
+                          items:
+                            type: string
+                            example: "https://swapi.py4e.com/api/planets/1/"
+                        naves:
+                          type: array
+                          items:
+                            type: string
+                            example: "https://swapi.py4e.com/api/starships/2/"
+                        vehiculos:
+                          type: array
+                          items:
+                            type: string
+                            example: "https://swapi.py4e.com/api/vehicles/4/"
+                        especies:
+                          type: array
+                          items:
+                            type: string
+                            example: "https://swapi.py4e.com/api/species/1/"
+                        creado:
+                          type: string
+                          format: date-time
+                          example: "2014-12-10T14:23:31.880000Z"
+                        editado:
+                          type: string
+                          format: date-time
+                          example: "2014-12-20T19:49:45.256000Z"
+                        url:
+                          type: string
+                          example: "https://swapi.py4e.com/api/films/1/"
+              status:
+                type: integer
+                example: 200
+  

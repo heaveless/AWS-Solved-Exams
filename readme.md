@@ -12,6 +12,47 @@
 
 ¡Bienvenido a Planets API! 🌌 Una API donde los planetas de Star Wars cobran vida en un abrir y cerrar de parsecs. ¿Quieres saber todo sobre Tatooine o descubrir datos desconocidos de Endor? Esta app conecta con SWAPI para obtener información estelar en tiempo real, almacenando los planetas que visitas en DynamoDB y acelerando tus exploraciones con Redis para que nunca tengas que esperar por la fuerza... ¡A explorar la galaxia sin límites (y sin servidores)!
 
+# Inicio rapido
+
+Si deseas iniciar rrapidamente de forma local puede seguir estas instrucciones para probarlo.
+
+**dependencias**
+
+- [Docker](https://www.docker.com/)
+- [Docker-Compose](https://docs.docker.com/compose/)
+- [NodeJs](https://nodejs.org/)
+
+
+*Paso 1:* Instala las dependencias
+```bash
+npm install
+```
+
+*Paso 2:* Inicia Redis localmente mediante `docker-compose`
+```bash
+docker-compose up -d
+```
+
+*Paso 3:* Instala DynamoDb local
+```bash
+npm run sls:db:install
+```
+
+*Paso 4:* Inicia DynamoDb local
+```bash
+npm run sls:db:start
+```
+
+*Paso 5:* Crea un archivo `.env` desde `.env.example` para que la aplicacion pueda leer las variables de entorno. Puedes hacerlo manualmente o copiando este comando
+```bash
+cp .env.example .env
+```
+
+*Paso 6:* Inicia la aplicacion de forma local
+```bash
+npm run sls:offline
+```
+
 # Caracteristicas
 
 **Puntos principales**
@@ -36,7 +77,7 @@
 
 **Puntos Extra**
 
-- [x] Documentación de uso
+- [ x ] Documentación de uso
   - Para la documentacion se creo una [Wiki](https://github.com/heaveless/AWS-Solved-Exams/wiki) para su facilidad de lectura
 - [x] Pruebas unitarias
   - Para realizar las pruebas unitarias y de integracion se configuro [Jest](https://jestjs.io/)

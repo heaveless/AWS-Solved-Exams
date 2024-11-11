@@ -53,6 +53,9 @@ cp .env.example .env
 npm run sls:offline
 ```
 
+# Video Documentacion
+[![Watch the video](https://user-images.githubusercontent.com/14617699/100688264-04e11100-3393-11eb-8e4e-683752776f38.png)](https://drive.google.com/file/d/1ItqQCdDNL5axktfxUY5faz9glNX8SabD/preview)
+
 # Caracteristicas
 
 **Puntos principales**

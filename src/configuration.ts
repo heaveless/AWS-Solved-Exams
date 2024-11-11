@@ -20,11 +20,11 @@ export class Configuration implements ApplicationOptionsFactory {
     // dynamodb
     const ddb = new dynamoose.aws.ddb.DynamoDB({
       region: process.env.CONF_REGION,
-      // endpoint: process.env.CONF_DYNAMODB_ENDPOINT,
-      // credentials: {
-      //   accessKeyId: String(process.env.CONF_AWS_ACCESS_KEY_ID),
-      //   secretAccessKey: String(process.env.CONF_AWS_SECRET_ACCESS_KEY),
-      // },
+      endpoint: process.env.CONF_DYNAMODB_ENDPOINT,
+      credentials: {
+        accessKeyId: String(process.env.CONF_AWS_ACCESS_KEY_ID),
+        secretAccessKey: String(process.env.CONF_AWS_SECRET_ACCESS_KEY),
+      },
     });
     dynamoose.aws.ddb.set(ddb);
 
@@ -32,7 +32,7 @@ export class Configuration implements ApplicationOptionsFactory {
     const redis = new IoRedis({
       host: process.env.CONF_REDIS_HOST,
       port: Number(process.env.CONF_REDIS_PORT),
-      // password: process.env.CONF_REDIS_PASSWORD,
+      password: process.env.CONF_REDIS_PASSWORD,
     });
     useAdapter(redis);
   }

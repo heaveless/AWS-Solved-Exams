@@ -77,7 +77,7 @@ npm run sls:offline
 
 **Puntos Extra**
 
-- [ x ] Documentación de uso
+- [x] Documentación de uso
   - Para la documentacion se creo una [Wiki](https://github.com/heaveless/AWS-Solved-Exams/wiki) para su facilidad de lectura
 - [x] Pruebas unitarias
   - Para realizar las pruebas unitarias y de integracion se configuro [Jest](https://jestjs.io/)
